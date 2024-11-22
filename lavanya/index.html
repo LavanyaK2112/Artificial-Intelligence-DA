@@ -1,0 +1,34 @@
+<!DOCTYPE html> 
+<html> 
+<head> 
+    <title>Student Eligibility Checker</title> 
+</head> 
+<body> 
+    <h1>Check Student Eligibility</h1> 
+    <form id="eligibilityForm"> 
+        <label for="studentId">Student ID:</label> 
+        <input type="text" id="studentId" name="studentId" required> 
+        <button type="submit">Check</button> 
+    </form> 
+    <div id="result"></div> 
+ 
+    <script> 
+        document.getElementById('eligibilityForm').addEventListener('submit', async (event) 
+=> { 
+            event.preventDefault(); 
+            const studentId = document.getElementById('studentId').value; 
+            try { 
+                const response = await fetch(`/eligibility?id=${studentId}`); 
+                const data = await response.json(); 
+                document.getElementById('result').innerHTML = ` 
+                    <p>Student ID: ${data.student_id}</p> 
+                    <p>Scholarship: ${data.scholarship}</p> 
+                    <p>Exam Permission: ${data.exam_permission}</p> 
+                `; 
+            } catch (error) { 
+                document.getElementById('result').innerHTML = `<p>Error fetching data.</p>`; 
+            } 
+        }); 
+    </script> 
+</body> 
+</html> 
